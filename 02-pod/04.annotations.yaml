@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: annatations
+  namespace: roboshop
+  labels:
+    Trainer: "krishnaReddy"
+    duration: "120hours"
+
+  annotations:
+    com.roboshop.training: "120hours"
+    jenkins.uls: "krishna.com/roboshop"
+
+spec:
+  containers:
+  - name: hello-pod
+    image: nginx
+    ports:
+    - containerPort: 80
