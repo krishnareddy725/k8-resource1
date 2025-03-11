@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: label-pod
+  namespace: roboshop
+  labels:
+    course: "devops"
+    Trainer: "krishnaReddy"
+
+spec:
+  containers:
+  - name: label-pod
+    image: nginx
+    ports:
+    - containerPort: 80
