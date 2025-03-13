@@ -14,8 +14,6 @@ spec:
   containers:
   - name: resourcecontainer
     image: nginx
-    ports:
-    - containerPort: 80
     resources:
       requests:
         cpu: "100m"
