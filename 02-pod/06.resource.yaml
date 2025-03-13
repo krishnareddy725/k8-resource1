@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: resourcepod
+  namespace: roboshop
+  labels:
+    Trainer: "krishnaReddy"
+    Duration: "120HOURS"
+  annotations:
+    com.dot.training: "Devops"
+    Email: "krishna@hdhhlkl.com"
+
+spec:
+  containers:
+  - name: resourcecontainer
+    image: nginx
+    ports:
+      containerPort: 80
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "68mi"
+      limits:
+        cpu: "280m"
+        memory: "128mi"
