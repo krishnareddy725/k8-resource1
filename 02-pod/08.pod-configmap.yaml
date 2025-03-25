@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: callingconfigmap-pod
+
+spec:
+  containers:
+  - name: configmap
+    image: nginx
+    ports:
+    - containerPort: 80
+    envFrom:
+    - configMapRef:
+         name: devops-config
+      
