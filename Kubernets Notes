@@ -1,0 +1,191 @@
+kubectl == To connect to the kubernets cluster. It will check automatically "~/.kube/config/".
+
+kubectl get nodes == This command pulls the data from ".kube/config", To know how many nodes in kubernets cluster.
+
+kubectl version --short == To know the client version.
+
+Kubectl config get-contexts ==> this command will shows the how many clusters are tagged to this dev server. Let connect to your jump server.
+
+Kubectl config current-context ==> it will tell we are in which cluster.
+
+kubectl config use-context arn:aws:eks:us-east-1:8756:cluster/awseksdev02 == to jump to required cluster.
+
+Kubectl get nodes ==> This command will shows the what are the nodes connected to the cluster after logged in by useing above command.
+
+kubectl describe pod <pod-name> -n <namespace> | grep -A 10 "Init Containers"  ==> is the command to check dyntrace is running.
+
+Git branch -a ==> it will shows the all the branches, now we are in the “feature/fre-dev” branch. We will encourage the developer to put the final code in “feature/pre-dev” branch.
+
+kubectl delete pod podname -n roboshop == To delete the pod without configaration file.
+
+kubectl get all -A ==> to see name space with pods
+
+YAML SYNTAX USAGE TO BUILD RESOURCES IN KUBERNETS
+==================================================
+apiVersion: == Every resource creates with the api version(v1).
+kind: == what kind of resource you are creating.first letter is capital(kind: Namespace)
+metadata: == metadata menas below information
+  name: == That resource name(note in kind what ever we are giving that name)
+  namespace: == whichname space are we creating pods
+  labels: == labels are key=value pairs to call other services, labels have limitations in length and specal characters.
+  annotatons: == annotations are used to call outside resource(aws secrats), annotations we there is no linit like variables, we can use special charecters as well.
+
+spec: == it means container specifications
+- name: == denotes the container name
+  image: == denotes which image we are useing
+  env:  == it denotes the environment variable for container. these are key=value pairs.
+           ex - name: DEMO_GREETING
+                value: "Hello from the environment"
+
+            Note: Like this if there are many environment variables we will go for "configMap". This configMap we can use for N(number) of pods.
+                  applications when it requires configaration information it will take from "configMap", configMap is nothing but a key=value pairs.
+   resources: here we will define how much cpu and mem we required for the container.
+              ex:     resources:
+                        requests: == Denotes the how much cpu and memory is required while application start
+                          cpu: "100m"
+                          memory: "68mi"
+                        limits: == Denotes the if application is having more load then what extend the resource limits will go.
+                          cpu: "280m"
+                          memory: "128mi"
+=================================================================================
+
+kubectl get namespaces == To see all namespaces in your kubernets
+
+kubectl delete namespace roboshop ==  To delte the namespace.
+
+kubectl create -f namespace.yaml == To create the the service whatever in "namespace.yaml" file.
+
+kubectl delete -f namespace.yaml == To delte the service what ever we menationed 
+
+kubectl apply -f namespace.yaml == if resources not created it will create, if you assign any changes it will update.
+
+kubectl get pods -n roboshop == To see the pods under roboshop namespace.
+
+kubectl exec -it hello-pod -n roboshop bash == To login to pod
+
+kubectl exec -it multi-container -c almalinux -n roboshop bash == If our pod is having multiple containers to login specificall almalinux container.
+
+kubectl describe pod  multi-container -n roboshop == To know about the pod in detailed, like labels info, annotations info
+
+k9s installation in RHEL8 server
+===================================
+curl -LO https://github.com/derailed/k9s/releases/latest/download/k9s_Linux_amd64.tar.gz
+tar -xvzf k9s_Linux_amd64.tar.gz
+mv k9s /usr/local/bin/
+chmod +x /usr/local/bin/k9s
+k9s version
+k9s == To see graphical view for all pods, namespaces etc...
+
+:ns roboshop ==> to see pods in roboshop
+===========================================================================================
+
+ eksctl is the official command line from AWS, by useing "eksctl" we can configure production related clusters.
+
+ eksctl create cluster --config-file=eks.yaml == This is the command to create cluster
+
+
+===========================================================================================
+@#### configMap == advantages of the configmap is if the values are changeing, we are not disturbing the pod.
+directly we can edit configMap and restart the configmap and restart the pods. automatically new values will fetch.the use of configMap is fetch the values dynamically. 
+
+ex:- 
+apiVersion: v1
+  kind: ConfigMap
+  metadata:
+  name: devops-config(IT means configMap name)
+
+data:  ==> it means what data we are giving, here we are giving key=pairs.
+  course: devops
+  trainer: "krishnareddy" (this information we needs to call to pods, where we required)
+
+kubectl apply -f 07.configMap.yaml -n roboshop ==  To create configMap
+
+kubectl get configmap -n roboshop == To see the configMap details.
+
+kubectl describe configmap confimapname -n roboshop == To see what is in configmap.
+
+=========== keep below info under the container to call configMap to any pod ===========
+envFrom:
+  - configMapRef:
+       name: devops-config
+===========================
+
+kubectl edit configmap devops-config -n roboshop == To edit the configmap in server it self.
+================================================================================================
+
+@###Secrets in Kubernets == secrets and configmap both are same. just name will change. it is like key=value pair.
+ Note: - in secrets we needs to give "base64" value.
+        To get base64 value. in gitbash shell execute below commands.
+        $ echo -n "admin"|base64
+          YWRtaW4=
+        $ echo -n "admin123"|base64
+          YWRtaW4xMjM=
+
+      To decode the above passwords use below commands.
+        $ echo -n YWRtaW4xMjM= | base64 --decode
+          admin123
+
+ex: 
+apiVersion: v1
+kind: Secret
+metadata: 
+  name: devops-secret(It means secret name)
+
+type: Opaque( it means we cont see that)
+data:
+  username: YWRtaW4=
+  password: YWRtaW4xMjM=
+
+kubectl get secrets -n roboshop == To see the secrets in roboshop name space.
+=========== keep below info under the container to call configMap to any pod ==============
+    envFrom:
+      - secretRef:
+          name: devops-secret
+===========================================================================================
+
+@###Services: Pod is dynamic(that means this minit it will run next minit pod will terminate), Pod ip address are aphemeral they are not perminent. to achive pod to pod communication in kubernets and to expose the pod to outside world pod must attach to the service.
+
+1) we are useing pods but we are not exposing outside world, if you want to expose pods to outside other applications or outside world, we must use services.
+
+2) Load balancing
+
+3) service mesh
+
+Three types of services
+=========================
+clusterIP -- It is purely internal to kubernets.
+
+NodePort -- Node port you can expose to outside world
+
+Load balancer -- we can expse to outside world.
+
+IMP Notes
+==========
+1) first we have pod.
+2) we need to attach this pod to service. here label will help to select particular pod to respective service. labels should be uniquelabels strategy is. below once shows the labels uniqueness. so our pod labels should be unique.
+  
+  project: roboshop
+  component: catalogue
+  tier: tier-2
+
+
+@@@ex: Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+
+spec:
+  selector: ("1.Here if we are not giving anything here that means "cluster-ip",2. it      means  once pod is created this service is going to attach with witch pod, that is nothing but selector, How it select? that is depends on the labels(in Pod), what are the labels we gave in pod, the same labels we needs to give in service also)
+    app: nginx
+    demo: krishna (in pod syntax what information we have give the same info 
+          we needs to give, then only pod will select the respective service)
+
+  ports:
+    protocal: TCP
+    port: 80 (service port) 
+    targetPort: 80 (container Port, that means people hit service port, port number-80, that will pass the request to container port: 80) 
+
+
+
+
