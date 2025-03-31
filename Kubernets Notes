@@ -214,6 +214,36 @@ REPLICASET:- replicaset means same of pods. one pod is not enough to bare the lo
     app: nginx
     tier: frientend
 
+ex:
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-rs
+  namespace: roboshop
+  labels:
+    app: nginx
+    tier: frontend
+
+spec:
+  replicas: 3 #it means three replicas we want
+  selector:  # replica-set labels
+    matchLabels:
+      app: nginx
+      tier: frontend
+  
+  template:   #it is pod defination, it dont have apiVersion: and kind: , the reason pod is subset of the replicaset.
+    metadata:
+      labels:
+        app: nginx
+        tier: frontend
+
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+===========================================================================================
 
            
 
