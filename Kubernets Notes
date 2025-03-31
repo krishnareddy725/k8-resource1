@@ -67,6 +67,8 @@ kubectl exec -it multi-container -c almalinux -n roboshop bash == If our pod is 
 
 kubectl describe pod  multi-container -n roboshop == To know about the pod in detailed, like labels info, annotations info
 
+kubectl apply --dry-run=client -f 01-cluster-ip.yaml == To validate syntax of the your file. it wont create anything. it is just dry run. This indicates that your YAML file is correctly configured and ready to apply in your Kubernetes cluster.
+
 k9s installation in RHEL8 server
 ===================================
 curl -LO https://github.com/derailed/k9s/releases/latest/download/k9s_Linux_amd64.tar.gz
@@ -185,6 +187,8 @@ spec:
     protocal: TCP
     port: 80 (service port) 
     targetPort: 80 (container Port, that means people hit service port, port number-80, that will pass the request to container port: 80) 
+
+kubectl get services == To displays the all services in the kubernets.
 
 
 
