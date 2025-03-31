@@ -14,7 +14,7 @@ spec:
     ports:
     - containerPort: 80
 ###########
-apiVersion: v1
+apiVersion: v1:1S
 kind: Service
 metadata:
   name: nginx-service
