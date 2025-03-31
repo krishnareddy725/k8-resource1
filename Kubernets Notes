@@ -201,6 +201,8 @@ kubectl get services == To displays the all services in the kubernets.
   selector:
 =====================================
 
+3) Load balancer:- Load balancer will use for cloud providers.
+
 
 
 
