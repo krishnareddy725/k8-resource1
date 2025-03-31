@@ -20,6 +20,8 @@ kubectl delete pod podname -n roboshop == To delete the pod without configaratio
 
 kubectl get all -A ==> to see name space with pods
 
+kubectl get logs servicepod -n roboshop == To see logs of a pod
+
 YAML SYNTAX USAGE TO BUILD RESOURCES IN KUBERNETS
 ==================================================
 apiVersion: == Every resource creates with the api version(v1).
@@ -171,14 +173,15 @@ IMP Notes
   tier: tier-2
 
 
-@@@ex: Service
+1) ClusterIp: cluster ip for the internal purpus.
 apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
 
 spec:
-  selector: ("1.Here if we are not giving anything here that means "cluster-ip",2. it      means  once pod is created this service is going to attach with witch pod, that is nothing but selector, How it select? that is depends on the labels(in Pod), what are the labels we gave in pod, the same labels we needs to give in service also)
+         == Here if we are not giving anything here that means "cluster-ip"
+  selector: (it means  once pod is created this service is going to attach with witch pod, that is nothing but selector, How it select? that is depends on the labels(in Pod), what are the labels we gave in pod, the same labels we needs to give in service also)
     app: nginx
     demo: krishna (in pod syntax what information we have give the same info 
           we needs to give, then only pod will select the respective service)
@@ -189,6 +192,8 @@ spec:
     targetPort: 80 (container Port, that means people hit service port, port number-80, that will pass the request to container port: 80) 
 
 kubectl get services == To displays the all services in the kubernets.
+
+2) Nodeport:-
 
 
 
