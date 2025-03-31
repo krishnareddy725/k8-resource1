@@ -243,6 +243,8 @@ spec:
         image: nginx
         ports:
         - containerPort: 80
+
+Generally replicaset is for the to create number of replicas for the pod. we are useing application version(ex: cataloghu:1.0.0) is running, in next release we want to run (ex: cataloghu:1.2.0) for that nodes to go release and delete.
 ===========================================================================================
 
            
