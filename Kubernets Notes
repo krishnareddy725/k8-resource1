@@ -201,7 +201,17 @@ kubectl get services == To displays the all services in the kubernets.
   selector:
 =====================================
 
-3) Load balancer:- Load balancer will use for cloud providers.
+3) Load balancer:- Load balancer will use for cloud providers. for users directly we are not giving the ports ip address before that we are keeping loadbalancers. providing cluster-ip address to user is not a secure thing, so we keep loadbalancer. if user hits the loadbalncer, the request from the loadbalancer will go to any one of the nodeport via port number 31197 for the server, the nodeport request the cluster-ip, that cluster -ip send request to pod.
+
+=just add below lines to above synatx to become Load Balancer====
+spec:
+  type: LoadBalancer            
+  selector:
+===========================================================================================
+REPLICASET:- replicaset means same of pods. one pod is not enough to bare the load.based on the requests the pods needs to scale.
+
+
+           
 
 
 
