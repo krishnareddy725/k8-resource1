@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Replicaset
+metadata:
+  name: nginx-rs
+  labels:
+    app: nginx
+    tier: frontend
+
+spec:
+  replicas: 3 #it means three replicas we want
+  selctor:  # replica-set labels
+    matchLabels:
+      app: nginx
+      tier: frontend
+  
+  templates:   #it is pod defination, it dont have apiVersion: and kind: , the reason pod is subset of the replicaset.
+    metadata:
+      labels:
+        app: nginx
+        tier: frontend
+
+  spec:
+    containers:
+    - name: nginx
+      image: nginx

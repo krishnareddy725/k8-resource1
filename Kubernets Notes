@@ -208,7 +208,11 @@ spec:
   type: LoadBalancer            
   selector:
 ===========================================================================================
-REPLICASET:- replicaset means same of pods. one pod is not enough to bare the load.based on the requests the pods needs to scale.
+REPLICASET:- replicaset means same of pods. one pod is not enough to bare the load.based on the requests the pods needs to be scale. Pod is subset of replica set. first replica set will create. it will check it self for what we are creating replicas
+ replicaset will refers to the labels, then witch pod is having the same labels for that pod. it will create labels.
+  matchlabels:
+    app: nginx
+    tier: frientend
 
 
            
