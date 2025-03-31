@@ -1,7 +1,8 @@
 apiVersion: apps/v1
-kind: Replicaset
+kind: ReplicaSet
 metadata:
   name: nginx-rs
+  namespace: roboshop
   labels:
     app: nginx
     tier: frontend
@@ -15,6 +16,7 @@ spec:
   
   templates:   #it is pod defination, it dont have apiVersion: and kind: , the reason pod is subset of the replicaset.
     metadata:
+      namespace: roboshop
       labels:
         app: nginx
         tier: frontend
