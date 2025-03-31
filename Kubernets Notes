@@ -191,9 +191,15 @@ spec:
     port: 80 (service port) 
     targetPort: 80 (container Port, that means people hit service port, port number-80, that will pass the request to container port: 80) 
 
-kubectl get services == To displays the all services in the kubernets.
+kubectl get services == To displays the all services in the kubernets.  
 
-2) Nodeport:-
+2) Nodeport:- if you want to expose your pod to outside world.for nodeport we will get cluster ip. so clusterip is subset of nodeport.
+
+ =just add below lines to above synatx to becode nodePort====
+ spec:
+  type: NodePort
+  selector:
+=====================================
 
 
 
