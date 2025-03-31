@@ -9,14 +9,13 @@ metadata:
 
 spec:
   replicas: 3 #it means three replicas we want
-  selctor:  # replica-set labels
+  selector:  # replica-set labels
     matchLabels:
       app: nginx
       tier: frontend
   
-  templates:   #it is pod defination, it dont have apiVersion: and kind: , the reason pod is subset of the replicaset.
+  template:   #it is pod defination, it dont have apiVersion: and kind: , the reason pod is subset of the replicaset.
     metadata:
-      namespace: roboshop
       labels:
         app: nginx
         tier: frontend
@@ -25,3 +24,5 @@ spec:
     containers:
     - name: nginx
       image: nginx
+      ports:
+      - containerPort: 80
