@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: nodeportPod
   namespace: roboshop
-  labels:
+  labels: 
     trainer: krishna
     demo: nodeport
 
@@ -13,20 +13,20 @@ spec:
     image: nginx
     ports:
     - containerPort: 80
-
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-nodeport
-  namespace: roboshop
+  name: nodeportService
+  namespace: roboshop  # Added namespace to the Service
 
 spec:
   type: NodePort
-  selector:
+  selector:            
     trainer: krishna
     demo: nodeport
 
   ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
+  - protocol: TCP       
+    port: 80            # Exposed port by the Service
+    targetPort: 80      # Matches containerPort in Pod
