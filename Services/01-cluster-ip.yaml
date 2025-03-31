@@ -18,6 +18,7 @@ apiVersion: v2
 kind: Service
 metadata:
   name: nginx-service
+  namespace: roboshop
   
 spec:
   selector:
