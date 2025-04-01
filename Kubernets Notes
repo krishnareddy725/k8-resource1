@@ -248,7 +248,13 @@ spec:
 
 Generally replicaset is for the to create number of replicas for the pod. we are useing application version(ex: cataloghu:1.0.0) is running, in next release we want to run (ex: cataloghu:1.2.0) for that needs to go release and delete existing pods and replica set created  new pods with the latest version.
 ====================================================================================================================================================
-DEPLOYMENTSET:- ReplicaSet is manually used to maintain number of replicas, but it cont identify the changes in the application and cont update.
+DEPLOYMENTSET:- ReplicaSet is manually used to maintain number of replicas, but it con't identify the changes in the application and con't update.
+ "To identify the changes in the application and to update the version we have deployment".
+
+imp: clusterIP < NodePort < LoadBalancer
+     Pod < replicaset < deploymentset
+
+  
 
 
 
