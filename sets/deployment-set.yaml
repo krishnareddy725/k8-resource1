@@ -14,7 +14,7 @@ spec:
       app: krishna
       demo: devops
 
-  templates:
+  template:
     metadata:
       labels:
         app: krishna
