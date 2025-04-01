@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: roboshop
+  labels:
+    app: krishna
+    demo: devops
+
+spec:
+  replicas: 4
+  selector:
+    matchlabels:
+      app: krishna
+      demo: devops
+
+  templates:
+    metadata:
+      labels:
+        app: krishna
+        demo: devops
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.27-perl
+        ports:
+        - containerPort: 80
