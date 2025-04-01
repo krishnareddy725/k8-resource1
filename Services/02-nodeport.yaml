@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nodeport-pod       # Changed to conform to lowercase and DNS-1123 standards
+  name: nodeport-pod       
   namespace: roboshop
   labels:
     trainer: krishna
@@ -9,7 +9,7 @@ metadata:
 
 spec:
   containers:
-  - name: nodeport         # Changed to lowercase to meet RFC 1123 standards
+  - name: nodeport        
     image: nginx
     ports:
     - containerPort: 80
@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nodeport-service   # Changed to lowercase to meet DNS-1035 standards
+  name: nodeport-service   
   namespace: roboshop
 
 spec:

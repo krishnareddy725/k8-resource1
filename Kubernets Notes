@@ -254,7 +254,36 @@ DEPLOYMENTSET:- ReplicaSet is manually used to maintain number of replicas, but 
 imp: clusterIP < NodePort < LoadBalancer
      Pod < replicaset < deploymentset
 
-  
+  ex: syntax same as replicaset just replace "kind: Deployment"
+
+  so in deploymentset application is updated with the single command "kubectl apply -f filename.yaml"
+
+  How it is working?
+     old replicaset is creating the new replicaset. once pod in new replica set will up then pod in old replicaset will down, means at a time 3 pods will run because we set responsibulity is to replicaset is at any sitvation it has to run 3-replicas. like this new pods will create in new replicaset. finally replicaset is going to deleted. then new replicaset is going to attach to deploymentset. This process is called rooling update. This is zero down time deployment. but few seconds our application old version and new version both are running.
+===========================================================================================
+=====================================================================================================================================================================================
+ROBOSHOP PROJECT:- for any project below two point are important.
+
+1) image should exist (or) build the image ==> as per the application requirement build the image.
+2) configaring image through manifest files ==> It means we are informing to kubernets how to run that image by manifest files.
+          
+          Here in kubernets first we build the image, that image we are pushing to dockerhub, after that we create kubernetes manifest files and informs how kubernets will run that image.
+
+Q) who pull the images?
+A) Kubernets cluster is pulling the images.
+
+Below errors can expect by above two steps
+------------------------------------------
+image is there or not.
+image build properly or not.
+what are the image versions.
+does image pushed to repositary(Nexus or dockerhub) or not.
+kubernets is having image pull access or not.
+once image pulled, then configaration changes(step-2) correct or not.
+
+
+
+
 
 
 
