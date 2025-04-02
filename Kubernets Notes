@@ -1,3 +1,9 @@
+IMP:
+if the developer are changeing the variables or any other environment variables/endpoints, we will get "CrashLoopBackOff" error.
+kubectl.awseksdev02 get pods -n dev-kafka | grep -v Running ==> To see the pods who are having the issues(like above)
+
+kubectl.awseksdev02 get deployments -A | grep -i 0/0 ==> to see deployments currents stage
+
 kubectl == To connect to the kubernets cluster. It will check automatically "~/.kube/config/".
 
 kubectl get nodes == This command pulls the data from ".kube/config", To know how many nodes in kubernets cluster.
@@ -23,6 +29,8 @@ kubectl get all -A ==> to see name space with pods
 kubectl logs podname -n roboshop == To see logs of a pod
 
 kubectl get rs -n roboshop == To see the replicas
+
+kubectl get deployments -n roboshop == To see the deploymentssets.
 
 YAML SYNTAX USAGE TO BUILD RESOURCES IN KUBERNETS
 ==================================================
@@ -281,8 +289,11 @@ does image pushed to repositary(Nexus or dockerhub) or not.
 kubernets is having image pull access or not.
 once image pulled, then configaration changes(step-2) correct or not.
 
+https://github.com/daws-76s/roboshop-documentation ==> for the project documentation
 
+cat ~/.docker/config.json ==> to check which account is accessing latestly to the docker hub. here credentials are in base64.
 
+docker info == To dispaly all information about docker including above authentication info.
 
 
 
