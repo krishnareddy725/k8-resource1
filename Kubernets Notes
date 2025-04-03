@@ -32,6 +32,10 @@ kubectl get rs -n roboshop == To see the replicas
 
 kubectl get deployments -n roboshop == To see the deploymentssets.
 
+kubectl delete deployment nginx-deployment -n roboshop ==> to see deployment
+
+kubectl delete ns roboshop == To delete the Namespace
+
 YAML SYNTAX USAGE TO BUILD RESOURCES IN KUBERNETS
 ==================================================
 apiVersion: == Every resource creates with the api version(v1).
@@ -67,7 +71,7 @@ kubectl delete namespace roboshop ==  To delte the namespace.
 
 kubectl create -f namespace.yaml == To create the the service whatever in "namespace.yaml" file.
 
-kubectl delete -f namespace.yaml == To delte the service what ever we menationed 
+kubectl delete -f namespace.yaml == To delte the service what ever we menationed in "namespace.yaml" file.
 
 kubectl apply -f namespace.yaml == if resources not created it will create, if you assign any changes it will update.
 
@@ -169,14 +173,14 @@ Three types of services
 =========================
 clusterIP -- It is purely internal to kubernets.
 
-NodePort -- Node port you can expose to outside world
+NodePort -- Node port you can expose your pod to outside world
 
-Load balancer -- we can expse to outside world.
+Load balancer -- we can expse to outside world.use in AWS,AZURE,GCS.
 
 IMP Notes
 ==========
 1) first we have pod.
-2) we need to attach this pod to service. here label will help to select particular pod to respective service. labels should be uniquelabels strategy is. below once shows the labels uniqueness. so our pod labels should be unique.
+2) we need to attach this pod to service. here label will help to select particular pod to respective service. labels should be unique. below once shows the labels uniqueness. so our pod labels should be unique.
   
   project: roboshop
   component: catalogue
@@ -219,7 +223,7 @@ spec:
   selector:
 ===========================================================================================
 REPLICASET:- replicaset means same of pods. one pod is not enough to bare the load.based on the requests the pods needs to be scale. Pod is subset of replica set. first replica set will create. it will check it self for what we are creating replicas
- replicaset will refers to the labels, then witch pod is having the same labels for that pod. it will create labels.
+ replicaset will refers to the labels, then witch pod is having the same labels for that pod. it will create replicas.
   matchlabels:
     app: nginx
     tier: frientend
@@ -254,19 +258,27 @@ spec:
         ports:
         - containerPort: 80
 
-Generally replicaset is for the to create number of replicas for the pod. we are useing application version(ex: cataloghu:1.0.0) is running, in next release we want to run (ex: cataloghu:1.2.0) for that needs to go release and delete existing pods and replica set created  new pods with the latest version.
+Generally replicaset is for the to create number of replicas for the pod. we are useing application version(ex: cataloghu:1.0.0) is running, in next release we want to run (ex: cataloghu:1.2.0) for that needs to go re-release. in tis case we needs delete the existing one(kubectl delete -f applicationname.yaml) and recreate with the latest code(kubectl apply -f applicationname.yaml).
+
+note: applicationname.yaml file should have upto date code.
 ====================================================================================================================================================
 DEPLOYMENTSET:- ReplicaSet is manually used to maintain number of replicas, but it con't identify the changes in the application and con't update.
  "To identify the changes in the application and to update the version we have deployment".
 
-imp: clusterIP < NodePort < LoadBalancer
-     Pod < replicaset < deploymentset
+imp:services(clusterIP < NodePort < LoadBalancer)
+     sets(Pod < replicaset < deploymentset)
 
   ex: syntax same as replicaset just replace "kind: Deployment"
 
   so in deploymentset application is updated with the single command "kubectl apply -f filename.yaml"
 
-  How it is working?
+  note: applicationname.yaml file should have upto date code.
+
+  kubectl delete deployment nginx-deployment -n roboshop ==> to see deployment
+
+  kubectl get  deployment -n roboshop == To see the deployments
+
+  How ideployment is working?
      old replicaset is creating the new replicaset. once pod in new replica set will up then pod in old replicaset will down, means at a time 3 pods will run because we set responsibulity is to replicaset is at any sitvation it has to run 3-replicas. like this new pods will create in new replicaset. finally replicaset is going to deleted. then new replicaset is going to attach to deploymentset. This process is called rooling update. This is zero down time deployment. but few seconds our application old version and new version both are running.
 ===========================================================================================
 =====================================================================================================================================================================================
@@ -285,7 +297,7 @@ Below errors can expect by above two steps
 image is there or not.
 image build properly or not.
 what are the image versions.
-does image pushed to repositary(Nexus or dockerhub) or not.
+does image pushed to repositary(Nexus or dockerhub or ECS) or not.
 kubernets is having image pull access or not.
 once image pulled, then configaration changes(step-2) correct or not.
 
@@ -294,8 +306,14 @@ https://github.com/daws-76s/roboshop-documentation ==> for the project documenta
 cat ~/.docker/config.json ==> to check which account is accessing latestly to the docker hub. here credentials are in base64.
 
 docker info == To dispaly all information about docker including above authentication info.
+======================
+image pull policy: 
+imagePullpolicy: Always ==> it means kubentes cluster everytime pulls the latest image from repository(ECR, dockerhub, etc), so always keep "Always" that is recamanded.
 
+imagePullpolicy: ifNotPresent ==> Kubernetes pulls the image only if it is not already present on the node.
 
+imagePullpolicy: Never ==> Kubernetes will never attempt to pull the image. It uses only the local copy.
+=======================
 
 
            
