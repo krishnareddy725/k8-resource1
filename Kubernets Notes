@@ -1,3 +1,5 @@
+https://infotechys.com/install-a-kubernetes-cluster-on-rhel-9/ == kubernets cluster installation process. take static-ip for nodes.
+
 IMP:
 if the developer are changeing the variables or any other environment variables/endpoints, we will get "CrashLoopBackOff" error.
 kubectl.awseksdev02 get pods -n dev-kafka | grep -v Running ==> To see the pods who are having the issues(like above)
@@ -35,6 +37,8 @@ kubectl get deployments -n roboshop == To see the deploymentssets.
 kubectl delete deployment nginx-deployment -n roboshop ==> to see deployment
 
 kubectl delete ns roboshop == To delete the Namespace
+
+aws eks list-clusters --output table ==> login to jump machine and switch to cldadmdv account and run this command,it will list created EKS clusetr in the AWS
 
 YAML SYNTAX USAGE TO BUILD RESOURCES IN KUBERNETS
 ==================================================
