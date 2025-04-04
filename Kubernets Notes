@@ -107,7 +107,7 @@ k9s == To see graphical view for all pods, namespaces etc...
 
 
 ===========================================================================================
-@#### configMap == advantages of the configmap is if the values are changeing, we are not disturbing the pod.
+@#### configMap == advantages of the configmap is if the values are changeing, we are not disturbing the pod. mostly for application code change we will go for cicd (or) build process. if there is no application code change we maintain configaration outside of the application code. then we will save lot of time. so we dont maintain environmental variables in docker, we will maintain in kubernets layer as configMap.
 directly we can edit configMap and restart the configmap and restart the pods. automatically new values will fetch.the use of configMap is fetch the values dynamically. 
 
 ex:- 
