@@ -317,8 +317,44 @@ imagePullpolicy: Always ==> it means kubentes cluster everytime pulls the latest
 imagePullpolicy: ifNotPresent ==> Kubernetes pulls the image only if it is not already present on the node.
 
 imagePullpolicy: Never ==> Kubernetes will never attempt to pull the image. It uses only the local copy.
-=======================
+==========================================================================================
 
+To avoid multiple times giving "-n namespace", we can try below things.
+
+git clone https://github.com/ahmetb/kubectx /opt/kubectx
+ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+kubens roboshop ==> To move to roboshop namespace
+kubectl get pods == for all commands we can execute under same namespace.
+
+==========================================================================================
+
+mongodb port no: 27017
+
+[root@lenlk8smastert01 debug]# kubectl get pods -o wide
+NAME                         READY   STATUS    RESTARTS   AGE    IP               NODE               NOMINATED NODE   READINESS GATES
+catalogue-78cfc54744-r5l7d   1/1     Running   0          5h6m   192.168.58.241   lenlk8sworkert01   <none>           <none>
+debug                        1/1     Running   0          11m    192.168.58.232   lenlk8sworkert01   <none>           <none>
+mongodb-d8d59d9db-cv9m2      1/1     Running   0          20h    192.168.58.231   lenlk8sworkert01   <none>           <none>
+[root@lenlk8smastert01 debug]#
+
+as per this o/p catalogue is in one node and mongodb is another node etc.
+
+root@mongodb-d8d59d9db-cv9m2:/# netstat - lntp # after login the pods executing this command, here mongodb  is running on port No: 27017
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 mongodb-d8d59d9db:27017 192-168-58-241.ca:52560 ESTABLISHED
+Active UNIX domain sockets (w/o servers)
+Proto RefCnt Flags       Type       State         I-Node   Path
+root@mongodb-d8d59d9db-cv9m2:/#
+ 
+
+mysql works == 3306 port number
+
+mysql -u shipping -pRoboShop@1 == After login to mysql pod, again login to mysql server
+mysql> show databases; == It will displays the databases
+mysql> use cities;
+Database changed
+mysql> show tables;
 
            
 
